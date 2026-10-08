@@ -1,0 +1,41 @@
+# Dependencies and build output
+node_modules/
+dist/
+build/
+web-build/
+coverage/
+
+# Expo and Metro generated files
+.expo/
+expo-env.d.ts
+.metro-health-check*
+*.tsbuildinfo
+/ios/
+/android/
+
+# Local configuration and signing files
+.env*
+!.env.example
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.pem
+
+# Logs and editor files
+*.log
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+.DS_Store
+.idea/
+
+# BEADS runtime and temporary execution state
+.beads/beads.db
+.beads/daemon.lock
+.beads/daemon.pid
+.beads/daemon.log
+.beads/temp/
+.beads/context/
+.beads/plans/
