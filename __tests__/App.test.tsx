@@ -1,17 +1,62 @@
-import { render, screen } from '@testing-library/react-native';
+import { fireEvent, render, screen } from '@testing-library/react-native';
 
-import App from '../App';
+import App, { getPictureSize } from '../App';
 
-test('shows a dark movie list with artwork and descriptions', async () => {
+afterEach(() => {
+  jest.restoreAllMocks();
+});
+
+test('keeps rabbit pictures within narrow portrait screens', () => {
+  expect(getPictureSize(320, 568)).toBe(227);
+  expect(getPictureSize(390, 844)).toBe(337);
+  expect(getPictureSize(1200, 800)).toBe(320);
+});
+
+test('starts with all three rabbits and their habits', async () => {
+  jest.spyOn(Math, 'random').mockReturnValue(0);
   await render(<App />);
 
-  expect(screen.getByTestId('movie-screen')).toHaveStyle({ backgroundColor: '#090d16' });
-  expect(screen.getByText('Movie Night')).toBeTruthy();
-  expect(screen.getByText('The Last Observatory')).toBeTruthy();
-  expect(screen.getByText('A lone astronomer discovers a signal hidden in the northern lights.')).toBeTruthy();
-  expect(screen.getByLabelText('The Last Observatory poster')).toBeTruthy();
-  expect(screen.getByText('Midnight Current')).toBeTruthy();
-  expect(screen.getByLabelText('Midnight Current poster')).toBeTruthy();
-  expect(screen.getByText('The Glass Garden')).toBeTruthy();
-  expect(screen.getByLabelText('The Glass Garden poster')).toBeTruthy();
+  expect(screen.getByText('Rabbit Habits')).toBeTruthy();
+  expect(screen.getByText('Meet Pip')).toBeTruthy();
+  expect(screen.getByText('Meet Mochi')).toBeTruthy();
+  expect(screen.getByText('Meet Clover')).toBeTruthy();
+  expect(screen.getByLabelText('Pip the rabbit')).toBeTruthy();
+  expect(screen.getByLabelText('Mochi the rabbit')).toBeTruthy();
+  expect(screen.getByLabelText('Clover the rabbit')).toBeTruthy();
+  expect(screen.getByText('Nibble fresh greens')).toBeTruthy();
+  expect(screen.getByText('Explore the garden')).toBeTruthy();
+  expect(screen.getByText('Rest in a cozy corner')).toBeTruthy();
+  expect(screen.getAllByText('•')).toHaveLength(9);
+  expect(screen.getByTestId('rabbit-list').props.data).toHaveLength(3);
+});
+
+test('can show another rabbit when the random choice changes', async () => {
+  jest.spyOn(Math, 'random').mockReturnValue(0.99);
+  await render(<App />);
+
+  expect(screen.getByText('Meet Clover')).toBeTruthy();
+  expect(screen.getByLabelText('Clover the rabbit')).toBeTruthy();
+  expect(screen.getByText('Collect soft leaves')).toBeTruthy();
+  expect(screen.getByTestId('rabbit-list').props.data[0].rabbit.name).toBe('Clover');
+});
+
+test('loads more rabbit profiles each time the list reaches the end', async () => {
+  jest.spyOn(Math, 'random').mockReturnValue(0);
+  await render(<App />);
+
+  const list = screen.getByTestId('rabbit-list');
+  expect(screen.getAllByText('Meet Pip')).toHaveLength(1);
+
+  await fireEvent(list, 'scrollBeginDrag');
+  await fireEvent(list, 'endReached');
+  expect(screen.getAllByText('Meet Pip')).toHaveLength(2);
+  expect(screen.getAllByText('Meet Mochi')).toHaveLength(2);
+  expect(screen.getAllByText('Meet Clover')).toHaveLength(2);
+
+  await fireEvent(screen.getByTestId('rabbit-list'), 'endReached');
+  expect(screen.getByTestId('rabbit-list').props.data).toHaveLength(6);
+
+  await fireEvent(screen.getByTestId('rabbit-list'), 'scrollBeginDrag');
+  await fireEvent(screen.getByTestId('rabbit-list'), 'endReached');
+  expect(screen.getByTestId('rabbit-list').props.data).toHaveLength(9);
 });
