@@ -13,6 +13,13 @@
         "projectId": "409e2a00-da41-47b2-8676-456ccb5dfd49"
       }
     },
-    "owner": "vladyns-team"
+    "owner": "vladyns-team",
+    "plugins": [
+      "expo-router",
+      "expo-status-bar"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
   }
 }
