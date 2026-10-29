@@ -20,6 +20,7 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "scheme": "rabbit-habits"
   }
 }

@@ -1,10 +1,10 @@
 # Rabbit Habits
 
-A React Native starter built with Expo SDK 57 and TypeScript. The current screen shows all three mock rabbits with their pictures, names, and habits, starting from a random rabbit. Scrolling to the end loads another set of profiles, cycling through the local mock rabbits. Habit creation, reminders, and progress tracking are not implemented yet.
+A React Native starter built with Expo SDK 58 and TypeScript. The current screen shows all three mock rabbits with their pictures, names, and habits, starting from a random rabbit. Scrolling to the end loads another set of profiles, cycling through the local mock rabbits. Habit creation, reminders, and progress tracking are not implemented yet.
 
 ## Requirements
 
-- Node.js 22.13 or newer and npm
+- Node.js 22.13+, 24.3+, or 26+ and npm (even-numbered releases)
 - An Android emulator, iOS simulator on macOS, or a device with Expo Go
 
 ## Run locally
@@ -21,9 +21,10 @@ Scan the QR code shown by Expo to open the app on a device. To launch a simulato
 | Path | Purpose |
 | --- | --- |
 | `App.tsx` | Infinite scrolling rabbit profile screen and styles |
+| `app/index.tsx` | Expo Router home route that displays `App.tsx` |
 | `src/data/rabbits.ts` | Mock rabbit profiles and habits |
 | `assets/rabbits/` | Local rabbit pictures for the mock profiles |
-| `index.ts` | Registers the root component with Expo |
+| `index.ts` | Legacy root registration file; Expo Router uses `expo-router/entry` |
 | `app.json` | App name and Expo configuration |
 | `__tests__/App.test.tsx` | Rabbit-screen component tests |
 | `AGENTS.md`, `.metaswarm/` | Contributor and Metaswarm guidance |

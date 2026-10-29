@@ -20,12 +20,12 @@ test('starts with all three rabbits and their habits', async () => {
   expect(screen.getByText('Meet Pip')).toBeTruthy();
   expect(screen.getByText('Meet Mochi')).toBeTruthy();
   expect(screen.getByText('Meet Clover')).toBeTruthy();
-  expect(screen.getAllByLabelText('Pip the rabbit')).toHaveLength(2);
-  expect(screen.getAllByLabelText('Mochi the rabbit')).toHaveLength(2);
-  expect(screen.getAllByLabelText('Clover the rabbit')).toHaveLength(2);
-  expect(screen.getAllByText('Nibble fresh greens')).toHaveLength(2);
-  expect(screen.getAllByText('Explore the garden')).toHaveLength(2);
-  expect(screen.getAllByText('Rest in a cozy corner')).toHaveLength(2);
+  expect(screen.getAllByLabelText('Pip the rabbit')).toHaveLength(1);
+  expect(screen.getAllByLabelText('Mochi the rabbit')).toHaveLength(1);
+  expect(screen.getAllByLabelText('Clover the rabbit')).toHaveLength(1);
+  expect(screen.getAllByText('Nibble fresh greens')).toHaveLength(1);
+  expect(screen.getAllByText('Explore the garden')).toHaveLength(1);
+  expect(screen.getAllByText('Rest in a cozy corner')).toHaveLength(1);
   expect(screen.getAllByText('•')).toHaveLength(9);
   expect(screen.getByTestId('rabbit-list').props.data).toHaveLength(3);
 });
@@ -35,8 +35,8 @@ test('can show another rabbit when the random choice changes', async () => {
   await render(<App />);
 
   expect(screen.getByText('Meet Clover')).toBeTruthy();
-  expect(screen.getAllByLabelText('Clover the rabbit')).toHaveLength(2);
-  expect(screen.getAllByText('Collect soft leaves')).toHaveLength(2);
+  expect(screen.getAllByLabelText('Clover the rabbit')).toHaveLength(1);
+  expect(screen.getAllByText('Collect soft leaves')).toHaveLength(1);
   expect(screen.getByTestId('rabbit-list').props.data[0].rabbit.name).toBe('Clover');
 });
 
@@ -56,7 +56,12 @@ test('loads more rabbit profiles each time the list reaches the end', async () =
   await fireEvent(screen.getByTestId('rabbit-list'), 'endReached');
   expect(screen.getByTestId('rabbit-list').props.data).toHaveLength(6);
 
-  await fireEvent(screen.getByTestId('rabbit-list'), 'scrollBeginDrag');
+  const firstBatch = screen.getByTestId('rabbit-list').props.data;
+  expect(new Set(firstBatch.map((profile: { id: string }) => profile.id)).size).toBe(firstBatch.length);
+
+  await fireEvent(screen.getByTestId('rabbit-list'), 'contentSizeChange');
   await fireEvent(screen.getByTestId('rabbit-list'), 'endReached');
-  expect(screen.getByTestId('rabbit-list').props.data).toHaveLength(9);
+  const secondBatch = screen.getByTestId('rabbit-list').props.data;
+  expect(secondBatch).toHaveLength(9);
+  expect(new Set(secondBatch.map((profile: { id: string }) => profile.id)).size).toBe(secondBatch.length);
 });

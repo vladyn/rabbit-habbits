@@ -41,11 +41,9 @@ export default function App() {
   const [profileCount, setProfileCount] = useState(rabbits.length);
   const canLoadMore = useRef(false);
   const profiles = Array.from({ length: profileCount }, (_, index) => ({
-    id: rabbits[(firstRabbitIndex + index) % rabbits.length].id.toString(),
+    id: index.toString(),
     rabbit: rabbits[(firstRabbitIndex + index) % rabbits.length],
   }));
-
-  console.log(profiles);
 
   return (
     <View style={styles.screen}>
