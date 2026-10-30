@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { FlatList, Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
-import { rabbits, type Rabbit } from './src/data/rabbits';
+import { rabbits, type Rabbit } from '@/data/rabbits';
 
 export function getPictureSize(viewportWidth: number, viewportHeight: number) {
   return Math.floor(Math.max(0, Math.min(viewportWidth - 48, viewportHeight * 0.4, 360)));
@@ -41,11 +41,9 @@ export default function App() {
   const [profileCount, setProfileCount] = useState(rabbits.length);
   const canLoadMore = useRef(false);
   const profiles = Array.from({ length: profileCount }, (_, index) => ({
-    id: rabbits[(firstRabbitIndex + index) % rabbits.length].id.toString(),
+    id: index.toString(),
     rabbit: rabbits[(firstRabbitIndex + index) % rabbits.length],
   }));
-
-  console.log(profiles);
 
   return (
     <View style={styles.screen}>
