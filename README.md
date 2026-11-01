@@ -20,8 +20,9 @@ Scan the QR code shown by Expo to open the app on a device. To launch a simulato
 
 | Path | Purpose |
 | --- | --- |
-| `App.tsx` | Infinite scrolling rabbit profile screen and styles |
+| `App.tsx` | Infinite scrolling rabbit profile screen |
 | `app/index.tsx` | Expo Router home route that displays `App.tsx` |
+| `src/components/RabbitProfile.tsx` | Shared rabbit profile component and styles |
 | `src/data/rabbits.ts` | Mock rabbit profiles and habits |
 | `assets/rabbits/` | Local rabbit pictures for the mock profiles |
 | `index.ts` | Legacy root registration file; Expo Router uses `expo-router/entry` |

@@ -2,7 +2,8 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ScrollView, StyleSheet, Text, useWindowDimensions } from 'react-native';
 
-import { getPictureSize, RabbitProfile } from '../../App';
+import { getPictureSize } from '../../App';
+import { RabbitProfile } from '@/components/RabbitProfile';
 import { rabbits } from '@/data/rabbits';
 
 export default function RabbitDetail() {
