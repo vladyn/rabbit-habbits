@@ -1,9 +1,30 @@
 import { fireEvent, render, screen } from '@testing-library/react-native';
 
 import App, { getPictureSize } from '../App';
+import { useRouter } from 'expo-router';
+
+jest.mock('expo-router', () => ({
+  useRouter: jest.fn(),
+}));
+
+const push = jest.fn();
+
+beforeEach(() => {
+  jest.mocked(useRouter).mockReturnValue({ push } as unknown as ReturnType<typeof useRouter>);
+});
 
 afterEach(() => {
   jest.restoreAllMocks();
+  push.mockClear();
+});
+
+test('opens the tapped rabbit in its own route', async () => {
+  jest.spyOn(Math, 'random').mockReturnValue(0);
+  await render(<App />);
+
+  await fireEvent.press(screen.getByLabelText("View Mochi's profile"));
+
+  expect(push).toHaveBeenCalledWith('/rabbit/2');
 });
 
 test('keeps rabbit pictures within narrow portrait screens', () => {

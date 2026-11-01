@@ -42,6 +42,8 @@
     "preset": "jest-expo",
     "collectCoverageFrom": [
       "App.tsx",
+      "app/_layout.tsx",
+      "app/rabbit/**/*.{ts,tsx}",
       "src/**/*.{ts,tsx}"
     ],
     "coverageThreshold": {
