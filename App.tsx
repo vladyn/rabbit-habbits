@@ -1,38 +1,13 @@
 import { useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { useRouter } from 'expo-router';
-import { FlatList, Image, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
+import { FlatList, Pressable, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 
-import { rabbits, type Rabbit } from '@/data/rabbits';
+import { RabbitProfile } from '@/components/RabbitProfile';
+import { rabbits } from '@/data/rabbits';
 
 export function getPictureSize(viewportWidth: number, viewportHeight: number) {
   return Math.floor(Math.max(0, Math.min(viewportWidth - 48, viewportHeight * 0.4, 360)));
-}
-
-export function RabbitProfile({ rabbit, pictureSize }: { rabbit: Rabbit; pictureSize: number }) {
-  return (
-    <View style={styles.profile}>
-      <Text style={styles.eyebrow}>YOUR LITTLE COMPANION</Text>
-      <Text style={styles.title}>Meet {rabbit.name}</Text>
-      <Text style={styles.subtitle}>Small routines, happy hops.</Text>
-
-      <Image
-        accessibilityLabel={`${rabbit.name} the rabbit`}
-        source={rabbit.picture}
-        style={[styles.picture, { width: pictureSize, height: pictureSize }]}
-      />
-
-      <View style={styles.habitsCard}>
-        <Text style={styles.habitsTitle}>{rabbit.name}'s habits</Text>
-        {rabbit.habits.map((habit) => (
-          <View key={habit} style={styles.habitRow}>
-            <Text style={styles.bullet}>•</Text>
-            <Text style={styles.habitText}>{habit}</Text>
-          </View>
-        ))}
-      </View>
-    </View>
-  );
 }
 
 export default function App() {
@@ -96,58 +71,5 @@ const styles = StyleSheet.create({
     fontWeight: '800',
     letterSpacing: 0.2,
     marginBottom: 40,
-  },
-  profile: {
-    marginBottom: 36,
-  },
-  eyebrow: {
-    color: '#71977b',
-    fontSize: 11,
-    fontWeight: '800',
-    letterSpacing: 2,
-  },
-  title: {
-    color: '#243c2d',
-    fontSize: 38,
-    fontWeight: '800',
-    marginTop: 8,
-  },
-  subtitle: {
-    color: '#667d6d',
-    fontSize: 16,
-    marginTop: 6,
-    marginBottom: 24,
-  },
-  picture: {
-    alignSelf: 'center',
-    backgroundColor: '#dce8d7',
-  },
-  habitsCard: {
-    backgroundColor: '#ffffff',
-    padding: 22,
-    marginTop: 22,
-  },
-  habitsTitle: {
-    color: '#243c2d',
-    fontSize: 21,
-    fontWeight: '800',
-    marginBottom: 14,
-  },
-  habitRow: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    marginTop: 10,
-  },
-  bullet: {
-    color: '#6b9b73',
-    fontSize: 24,
-    lineHeight: 24,
-    marginRight: 12,
-  },
-  habitText: {
-    color: '#405847',
-    flex: 1,
-    fontSize: 16,
-    lineHeight: 24,
   },
 });
